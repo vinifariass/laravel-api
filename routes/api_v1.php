@@ -17,6 +17,7 @@ Route::get('/', function () {
 });
 
 Route::middleware('auth:sanctum')->apiResource('tickets', \App\Http\Controllers\Api\V1\TicketController::class);
+Route::middleware('auth:sanctum')->apiResource('users', \App\Http\Controllers\Api\V1\UsersController::class);
 Route::get('/tickets',function(){
     return \App\Models\Ticket::all();
 });

@@ -2,33 +2,30 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\Http\Controllers\Controller;
-use App\Models\Ticket;
-use App\Http\Requests\StoreTicketRequest;
-use App\Http\Requests\UpdateTicketRequest;
+use App\Models\User;
+use App\Http\Requests\Api\V1\StoreUserRequest;
+use App\Http\Requests\Api\V1\UpdateUserRequest;
+use App\Http\Resources\V1\UserResource;
 
-class UsersController extends Controller
+class UsersController extends ApiController
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        if ($this->include('tickets')) {
+            return UserResource::collection(User::with('tickets')->paginate());
+        }
+        return UserResource::collection(User::paginate());
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
+    
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreTicketRequest $request)
+    public function store(StoreUserRequest $request)
     {
         //
     }
@@ -36,23 +33,18 @@ class UsersController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Ticket $ticket)
+    public function show(User $user)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Ticket $ticket)
-    {
-        //
+        if ($this->include('tickets')) {
+            return new UserResource($user->load('tickets'));
+        }
+        return new UserResource($user);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateTicketRequest $request, Ticket $ticket)
+    public function update(UpdateUserRequest $request, User $user)
     {
         //
     }
@@ -60,7 +52,7 @@ class UsersController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Ticket $ticket)
+    public function destroy(User $user)
     {
         //
     }
