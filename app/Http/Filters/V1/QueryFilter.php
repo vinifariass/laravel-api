@@ -31,4 +31,13 @@ abstract class QueryFilter
         }
     }
 
+    protected function filter($arr){
+        foreach ($arr as $key => $value) {
+            if (method_exists($this, $key)) {
+                $this->{$key}($value);
+            }
+        }
+        return $this->builder;
+    }
+
 }
