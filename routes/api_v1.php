@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\V1\AuthorTicketsController;
 
 // http://localhost:8000/api
 // universal resource locator
@@ -17,7 +18,8 @@ Route::get('/', function () {
 });
 
 Route::middleware('auth:sanctum')->apiResource('tickets', \App\Http\Controllers\Api\V1\TicketController::class);
-Route::middleware('auth:sanctum')->apiResource('users', \App\Http\Controllers\Api\V1\UsersController::class);
+Route::middleware('auth:sanctum')->apiResource('authors', \App\Http\Controllers\Api\V1\AuthorsController::class);
+Route::middleware('auth:sanctum')->apiResource('authors.tickets', AuthorTicketsController::class);
 Route::get('/tickets',function(){
     return \App\Models\Ticket::all();
 });
