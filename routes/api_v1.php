@@ -16,7 +16,7 @@ Route::get('/', function () {
     return response()->json(['message' => 'Hello API'], 200);
 });
 
-Route::apiResource('tickets', \App\Http\Controllers\Api\V1\TicketController::class);
+Route::middleware('auth:sanctum')->apiResource('tickets', \App\Http\Controllers\Api\V1\TicketController::class);
 Route::get('/tickets',function(){
     return \App\Models\Ticket::all();
 });

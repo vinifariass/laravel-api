@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\AuthController;
 
 // http://localhost:8000/api
 // universal resource locator
@@ -16,8 +17,9 @@ Route::get('/', function () {
     return response()->json(['message' => 'Hello API'], 200);
 });
 
-Route::post('/register', [\App\Http\Controllers\AuthController::class, 'register']);
-Route::post('/login', [\App\Http\Controllers\AuthController::class, 'login']);
+Route::post('/register', [AuthController::class, 'register']);
+Route::post('/login', [AuthController::class, 'login']);
+Route::middleware('auth:sanctum')->post('/logout',[AuthController::class, 'logout']);
 Route::get('/tickets',function(){
     return \App\Models\Ticket::all();
 });
